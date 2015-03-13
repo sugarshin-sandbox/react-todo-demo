@@ -1,5 +1,5 @@
 gulp = require 'gulp'
-gIf = require 'gulp-if'
+gulpIf = require 'gulp-if'
 duration = require 'gulp-duration'
 notify = require 'gulp-notify'
 uglify = require 'gulp-uglify'
@@ -9,9 +9,7 @@ buffer = require 'vinyl-buffer'
 watchify = require 'watchify'
 browserSync = require 'browser-sync'
 reload = browserSync.reload
-
 C = require('../package.json').projectConf
-
 
 config =
   bundle: 'bundle.js'
@@ -51,9 +49,9 @@ compile = (minify, watch) ->
       .pipe source config.bundle
       .pipe duration "compiled => #{config.bundle}"
       .pipe buffer()
-      .pipe gIf minify, uglify()
+      .pipe gulpIf minify, uglify()
       .pipe gulp.dest config.dest
-      .pipe gIf watch, reload stream: true, once: true
+      .pipe gulpIf watch, reload stream: true, once: true
 
   bundler.on 'update', bundle
 
