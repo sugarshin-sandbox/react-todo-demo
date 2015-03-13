@@ -3,16 +3,26 @@
 import React from 'react';
 
 export default React.createClass({
+  propTypes: {
+    href: React.PropTypes.string.isRequired
+  },
+
+  getDefaultProps() {
+    return {
+      href: '#'
+    }
+  },
+
   getInitialState() {
     return {
-      name: 'Default',
+      innerText: 'Default name',
       className: 'leave'
     }
   },
 
   onClick(ev, id) {
     ev.preventDefault();
-    this.setState({name: 'Changed!'});
+    this.setState({innerText: 'Changed!'});
   },
 
   onMouseOver(ev, id) {
@@ -26,7 +36,9 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <a onClick={this.onClick} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} href={this.props.href} className={this.state.className} name={this.props.name}>{this.state.name}</a>
+        <a onClick={this.onClick} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} href={this.props.href} className={this.state.className}>
+          {this.state.innerText}
+        </a>
       </div>
     )
   }

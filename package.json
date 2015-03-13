@@ -1,8 +1,8 @@
 {
-  "name": "react-demo",
+  "name": "react-todo-demo",
   "version": "0.0.0",
-  "description": "React demo",
-  "repository": "git@github.com:sugarshin/react-demo.git",
+  "description": "React todolist demo",
+  "repository": "git@github.com:sugarshin/react-todo-demo.git",
   "scripts": {
     "start": "gulp",
     "build": "gulp build"

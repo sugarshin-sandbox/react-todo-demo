@@ -1,6 +1,6 @@
-# react-demo
+# react-todo-demo
 
-http://sugarshin.github.io/react-demo/
+http://sugarshin.github.io/react-todo-demo/
 
 ## License
 
