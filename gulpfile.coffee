@@ -20,4 +20,5 @@ gulp.task 'serve', ->
 
 gulp.task 'default', ['css', 'watch-js', 'serve'], ->
   gulp.watch ["./#{C.SRC}/**/*.styl"], ['css', reload]
+
 gulp.task 'build', sequence 'clean', ['css', 'build-js']

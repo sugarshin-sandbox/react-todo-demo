@@ -22,14 +22,21 @@ let Todo = React.createClass({
     this.props.onDelete(this.props.todo.id);
   },
 
+  // // Propが更新される時に呼ばれる
+  // // Componentが新しくDOMツリーに追加される時には呼ばれない
+  // // Propの値に応じてStateの値を更新したいようなときに
+  // componentWillReceiveProps() {
+  //   console.log('componentWillReceiveProps => Todo');
+  // },
+
   render() {
     return (
-      <div className={this.props.complete}>
-        <input type="checkbox" value={this.props.complete} onChange={this._onChangeComplete} />
-        <span className={this.props.className}>{this.props.text}</span>
+      <div>
+        <input type="checkbox" checked={this.props.todo.complete} onChange={this._onChangeComplete} />
+        <span>{this.props.todo.text}</span>
         <button type="button" onClick={this._onDelete}>Delete</button>
       </div>
-    )
+    );
   }
 });
 

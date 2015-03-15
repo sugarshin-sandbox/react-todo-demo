@@ -13,11 +13,12 @@ C = require('../package.json').projectConf
 
 config =
   bundle: 'bundle.js'
-  src: "./#{C.SRC}/js/main.js"
+  src: "./#{C.SRC}/js/main.jsx"
   dest: "#{C.PUBLIC}"
   browserify:
     # debug: true
     transform: ['babelify']
+    extensions: ['.jsx']
 
 errorHandler = (args...) ->
   notify

@@ -1,44 +1,57 @@
 "use strict";
 
 import React from 'react';
-import Todo from './todo.jsx';
+import Todo from './todo';
 
 let TodoList = React.createClass({
   getInitialState() {
     return {
-      todos: [
-        {
-          id: 1,
-          text: "todo1",
-          complete: false,
-          className: ''
-        },
-        {
-          id: 2,
-          text: "todo2",
-          complete: false,
-          className: ''
-        },
-        {
-          id: 3,
-          text: "todo3",
-          complete: false,
-          className: ''
-        }
-      ]
+      todos: []
     };
+  },
+
+  // ComponentがDOMツリーに追加される前に一度だけ呼ばれる
+  // この中でsetStateするとrender時にまとめて行われる
+  // server-side rendering時にも呼ばれる
+  // componentWillMount() {
+  //   console.log('componentWillMount => TodoList');
+  // },
+
+  _save(todos) {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  },
+
+  _fetch() {
+    return JSON.parse(localStorage.getItem('todos'));
+  },
+
+  // ComponentがDOMツリーに追加された状態で呼ばれる
+  // server-side rendering時は呼ばれない
+  // DOMを扱う処理、Ajaxリクエスト、setIntervalの登録などserver-side rendering時には必要ない初期化処理時に
+  componentDidMount() {
+    this.setState({
+      todos: this._fetch() ? this._fetch() : {}
+    });
+  },
+
+  // componentWillUnmount() {
+  //   window.removeEventListener('resize');
+  // },
+
+  componentDidUpdate(prevProps, prevState) {
+    this._save(this.state.todos);
   },
 
   deleteTodo(id) {
     this.setState({
-      todos: this.state.todos.filter((todo) => {
+      todos: this.state.todos.filter( todo => {
         return todo.id !== id;
       })
     });
   },
 
-  changeCompleteTodo(id) {
-    let todos = this.state.todos.map((todo) => {
+  changeComplete(id) {
+    let todos = this.state.todos.map( todo => {
       if (todo.id === id) {
         todo.complete = !todo.complete;
       }
@@ -49,11 +62,33 @@ let TodoList = React.createClass({
     });
   },
 
-  render() {
-    let todos = this.state.todos.map((todo) => {
-      return <li key={todo.id}><Todo onDelete={this.deleteTodo} onChangeComplete={this.changeCompleteTodo} todo={todo} /></li>;
+  addTodo() {
+    let todo = {
+      id: (+new Date + Math.floor(Math.random() * 999999)),
+      text: this.refs.addNew.getDOMNode().value.trim(),
+      complete: false
+    }
+    this.setState({
+      todos: this.state.todos.concat(todo)
     });
-    return <ul>{todos}</ul>;
+  },
+
+  render() {
+    let todos = this.state.todos.map( todo => {
+      return (
+        <li key={todo.id} className={todo.complete ? 'completed' : ''}>
+          <Todo onDelete={this.deleteTodo} onChangeComplete={this.changeComplete} todo={todo} />
+        </li>
+      );
+    });
+
+    return (
+      <div>
+        <input type="text" ref="addNew" placeholder="task name" />
+        <button type="button" onClick={this.addTodo}>Add</button>
+        <ul>{todos}</ul>
+      </div>
+    );
   }
 });
 
