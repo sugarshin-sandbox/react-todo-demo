@@ -19798,9 +19798,12 @@ var TodoList = React.createClass({
   // ComponentがDOMツリーに追加される前に一度だけ呼ばれる
   // この中でsetStateするとrender時にまとめて行われる
   // server-side rendering時にも呼ばれる
-  // componentWillMount() {
-  //   console.log('componentWillMount => TodoList');
-  // },
+  componentWillMount: function componentWillMount() {
+    console.log("componentWillMount => TodoList");
+    if (localStorage.getItem("todos") === null) {
+      localStorage.setItem("todos", JSON.stringify([]));
+    }
+  },
 
   _save: function _save(todos) {
     localStorage.setItem("todos", JSON.stringify(todos));
