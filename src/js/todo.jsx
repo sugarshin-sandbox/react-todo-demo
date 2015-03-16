@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-let Todo = React.createClass({
+export default React.createClass({
   propTypes: {
     todo: React.PropTypes.shape({
       id: React.PropTypes.number.isRequired,
@@ -22,11 +22,7 @@ let Todo = React.createClass({
     this.props.onDelete(this.props.todo.id);
   },
 
-  // // Propが更新される時に呼ばれる
-  // // Componentが新しくDOMツリーに追加される時には呼ばれない
-  // // Propの値に応じてStateの値を更新したいようなときに
   // componentWillReceiveProps() {
-  //   console.log('componentWillReceiveProps => Todo');
   // },
 
   render() {
@@ -39,5 +35,3 @@ let Todo = React.createClass({
     );
   }
 });
-
-export default Todo
